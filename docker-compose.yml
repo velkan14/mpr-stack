@@ -1,0 +1,25 @@
+version: "3.2"
+
+services:
+  php:
+    build: ./src/php
+    environment:
+      DB_USER: dbuser
+      DB_PASSWORD: password
+      DB_NAME: bundle-manager-docker
+      DB_HOST: db
+    ports:
+      - 80:80
+    volumes:
+      - ./src/php:/var/www/html/
+  db:
+    build: ./src/database
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+      MYSQL_USER: dbuser
+      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: bundle-manager-docker
